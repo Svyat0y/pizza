@@ -1,9 +1,9 @@
-
-
 function App() {
-  return (
-    <div>start</div>
-  );
+	return (
+		<div>
+			<div>sada</div>
+		</div>
+	)
 }
-
-export default App;
+ 
+export default App
