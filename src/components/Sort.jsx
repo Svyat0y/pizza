@@ -1,6 +1,30 @@
+import { useEffect, useRef, useState } from 'react'
+
+
 const Sort = () => {
+	const sortList = [ 'популярности', 'цене', 'алфавиту' ]
+	const [ open, setOpen ] = useState(false)
+	const [ selected, setSelected ] = useState(0)
+	const sortRef = useRef()
+	const sortValue = sortList[selected]
+
+	useEffect(() => {
+		document.body.addEventListener('click', handleClickOutside)
+		return () => document.body.removeEventListener('click', handleClickOutside)
+	}, [])
+
+	const handleClickOutside = (e) => {
+		const path = e.path || (e.composedPath && e.composedPath())
+		if ( !path.includes(sortRef.current) ) setOpen(false)
+	}
+
+	const onClickSortValue = (i) => {
+		setSelected(i)
+		setOpen(false)
+	}
+
 	return (
-		<div className="sort">
+		<div ref={ sortRef } className="sort">
 			<div className="sort__label">
 				<svg
 					width="10"
@@ -15,15 +39,21 @@ const Sort = () => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>популярности</span>
+				<span onClick={ () => setOpen(!open) }>{ sortValue }</span>
 			</div>
-			<div className="sort__popup">
-				<ul>
-					<li className="active">популярности</li>
-					<li>цене</li>
-					<li>алфавиту</li>
-				</ul>
-			</div>
+			{ open && (
+				<div className="sort__popup">
+					<ul>
+						{ sortList.map((value, i) => (
+							<li key={ i }
+								onClick={ () => onClickSortValue(i) }
+								className={ selected === i ? 'active' : '' }>
+								{ value }
+							</li>
+						)) }
+					</ul>
+				</div>
+			) }
 		</div>
 	)
 }

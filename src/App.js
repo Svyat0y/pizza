@@ -8,7 +8,7 @@ import PizzaBlock from './components/PizzaBlock'
 import pizzas from './assets/pizzas.json'
 
 
-const App = () => {
+function App() {
 	return (
 		<div className="wrapper">
 			<Header/>

@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 
 const PizzaBlock = ({ name, imageUrl, price, sizes, types }) => {
+	const typesName = [ 'тонкое', 'традиционное' ]
 	const [ activeType, setActiveType ] = useState(types[0])
 	const [ activeSize, setActiveSize ] = useState(0)
-	const typesName = [ 'тонкое', 'традиционное' ]
 
 	return (
 		<div className="pizza-block">
