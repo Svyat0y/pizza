@@ -5,9 +5,10 @@ import Categories   from '../components/Categories'
 import Sort         from '../components/Sort'
 import LoadingBlock from '../components/LoadingBlock'
 import PizzaBlock   from '../components/PizzaBlock'
+import Pagination   from '../components/Pagination'
 
 
-const Home = () => {
+const Home = ({ searchValue }) => {
 	const [ items, setItems ] = useState([])
 	const [ isLoading, setIsLoading ] = useState(true)
 	const [ activeCategory, setActiveCategory ] = useState(0)
@@ -17,9 +18,10 @@ const Home = () => {
 		const category = activeCategory > 0 ? `category=${ activeCategory }` : ''
 		const sortBy = activeSort.sortProperty.replace('-', '')
 		const order = activeSort.sortProperty.includes('-') ? 'desc' : 'asc'
+		const search = searchValue ? `search=${ searchValue }` : ''
 
 		setIsLoading(true)
-		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?${ category }&sortBy=${ sortBy }&order=${ order } `)
+		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?page=1&limit=4${ category }&sortBy=${ sortBy }&order=${ order }&${ search } `)
 			.then(({ data }) => {
 				setTimeout(() => {
 					setItems(data)
@@ -27,7 +29,7 @@ const Home = () => {
 				}, 1000)
 			})
 		window.scrollTo(0, 0)
-	}, [ activeCategory, activeSort ])
+	}, [ activeCategory, activeSort, searchValue ])
 
 	return (
 		<div className="container">
@@ -43,6 +45,7 @@ const Home = () => {
 						: items.map(obj => <PizzaBlock key={ obj.id } { ...obj }/>)
 				}
 			</div>
+			<Pagination/>
 		</div>
 	)
 }
