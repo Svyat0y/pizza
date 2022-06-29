@@ -9,11 +9,17 @@ import PizzaBlock   from '../components/PizzaBlock'
 
 const Home = () => {
 	const [ items, setItems ] = useState([])
-	const [ isLoading, setIsLoading ] = useState(false)
+	const [ isLoading, setIsLoading ] = useState(true)
+	const [ activeCategory, setActiveCategory ] = useState(0)
+	const [ activeSort, setActiveSort ] = useState({ name: 'популярности (по убыв.)', sortProperty: '-rating' })
 
 	useEffect(() => {
+		const category = activeCategory > 0 ? `category=${ activeCategory }` : ''
+		const sortBy = activeSort.sortProperty.replace('-', '')
+		const order = activeSort.sortProperty.includes('-') ? 'desc' : 'asc'
+
 		setIsLoading(true)
-		axios.get('https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas')
+		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?${ category }&sortBy=${ sortBy }&order=${ order } `)
 			.then(({ data }) => {
 				setTimeout(() => {
 					setItems(data)
@@ -21,13 +27,13 @@ const Home = () => {
 				}, 1000)
 			})
 		window.scrollTo(0, 0)
-	}, [])
+	}, [ activeCategory, activeSort ])
 
 	return (
 		<div className="container">
 			<div className="content__top">
-				<Categories/>
-				<Sort/>
+				<Categories id={ activeCategory } onClickCategory={ (i) => setActiveCategory(i) }/>
+				<Sort activeSort={ activeSort } onclickSort={ (obj) => setActiveSort(obj) }/>
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
