@@ -1,5 +1,8 @@
-import { useContext, useEffect, useState } from 'react'
-import axios                               from 'axios'
+import { useEffect, useState } from 'react'
+import axios                   from 'axios'
+
+import { useDispatch, useSelector }      from 'react-redux'
+import { setCategory, setPage, setSort } from '../redux/slices/filterSlice'
 
 import Categories   from '../components/Categories'
 import Sort         from '../components/Sort'
@@ -7,16 +10,13 @@ import LoadingBlock from '../components/LoadingBlock'
 import PizzaBlock   from '../components/PizzaBlock'
 import Pagination   from '../components/Pagination'
 
-import { SearchContext } from '../App'
-
 
 const Home = () => {
-	const { searchValue } = useContext(SearchContext)
+	const { activeCategory, currentPage, activeSort, searchValue } = useSelector((state) => state.filter)
+	const dispatch = useDispatch()
+
 	const [ items, setItems ] = useState([])
 	const [ isLoading, setIsLoading ] = useState(true)
-	const [ activeCategory, setActiveCategory ] = useState(0)
-	const [ currentPage, setCurrentPage ] = useState(1)
-	const [ activeSort, setActiveSort ] = useState({ name: 'популярности (по убыв.)', sortProperty: '-rating' })
 
 	useEffect(() => {
 		const category = activeCategory > 0 ? `category=${ activeCategory }` : ''
@@ -25,21 +25,20 @@ const Home = () => {
 		const search = searchValue ? `search=${ searchValue }` : ''
 
 		setIsLoading(true)
-		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?page=${ currentPage }&limit=4${ category }&sortBy=${ sortBy }&order=${ order }&${ search } `)
+		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?page=${ currentPage }&limit=4&${ category }&sortBy=${ sortBy }&order=${ order }&${ search } `)
 			.then(({ data }) => {
 				setTimeout(() => {
 					setItems(data)
 					setIsLoading(false)
 				}, 1000)
 			})
-		window.scrollTo(0, 0)
 	}, [ activeCategory, activeSort, searchValue, currentPage ])
 
 	return (
 		<div className="container">
 			<div className="content__top">
-				<Categories id={ activeCategory } onClickCategory={ (i) => setActiveCategory(i) }/>
-				<Sort activeSort={ activeSort } onclickSort={ (obj) => setActiveSort(obj) }/>
+				<Categories category={ activeCategory } onClickCategory={ (i) => dispatch(setCategory(i)) }/>
+				<Sort activeSort={ activeSort } onclickSort={ (obj) => dispatch(setSort(obj)) }/>
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
@@ -49,7 +48,7 @@ const Home = () => {
 						: items.map(obj => <PizzaBlock key={ obj.id } { ...obj }/>)
 				}
 			</div>
-			<Pagination onChangePage={ setCurrentPage }/>
+			<Pagination dispatch={ dispatch } setPage={ setPage }/>
 		</div>
 	)
 }

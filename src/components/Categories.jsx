@@ -1,4 +1,4 @@
-const Categories = ({ id, onClickCategory }) => {
+const Categories = ({ category, onClickCategory }) => {
 	const categories = [ 'Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые' ]
 
 	return (
@@ -7,7 +7,7 @@ const Categories = ({ id, onClickCategory }) => {
 				{ categories.map((value, i) => (
 					<li key={ i }
 						onClick={ () => onClickCategory(i) }
-						className={ id === i ? 'active' : '' }>
+						className={ category === i ? 'active' : '' }>
 						{ value }
 					</li>
 				)) }
