@@ -12,6 +12,7 @@ const Home = ({ searchValue }) => {
 	const [ items, setItems ] = useState([])
 	const [ isLoading, setIsLoading ] = useState(true)
 	const [ activeCategory, setActiveCategory ] = useState(0)
+	const [ currentPage, setCurrentPage ] = useState(1)
 	const [ activeSort, setActiveSort ] = useState({ name: 'популярности (по убыв.)', sortProperty: '-rating' })
 
 	useEffect(() => {
@@ -21,7 +22,7 @@ const Home = ({ searchValue }) => {
 		const search = searchValue ? `search=${ searchValue }` : ''
 
 		setIsLoading(true)
-		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?page=1&limit=4${ category }&sortBy=${ sortBy }&order=${ order }&${ search } `)
+		axios.get(`https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas?page=${ currentPage }&limit=4${ category }&sortBy=${ sortBy }&order=${ order }&${ search } `)
 			.then(({ data }) => {
 				setTimeout(() => {
 					setItems(data)
@@ -29,7 +30,7 @@ const Home = ({ searchValue }) => {
 				}, 1000)
 			})
 		window.scrollTo(0, 0)
-	}, [ activeCategory, activeSort, searchValue ])
+	}, [ activeCategory, activeSort, searchValue, currentPage ])
 
 	return (
 		<div className="container">
@@ -45,7 +46,7 @@ const Home = ({ searchValue }) => {
 						: items.map(obj => <PizzaBlock key={ obj.id } { ...obj }/>)
 				}
 			</div>
-			<Pagination/>
+			<Pagination onChangePage={ setCurrentPage }/>
 		</div>
 	)
 }
