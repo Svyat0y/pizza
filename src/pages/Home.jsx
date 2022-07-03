@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import axios                   from 'axios'
+import { useContext, useEffect, useState } from 'react'
+import axios                               from 'axios'
 
 import Categories   from '../components/Categories'
 import Sort         from '../components/Sort'
@@ -7,8 +7,11 @@ import LoadingBlock from '../components/LoadingBlock'
 import PizzaBlock   from '../components/PizzaBlock'
 import Pagination   from '../components/Pagination'
 
+import { SearchContext } from '../App'
 
-const Home = ({ searchValue }) => {
+
+const Home = () => {
+	const { searchValue } = useContext(SearchContext)
 	const [ items, setItems ] = useState([])
 	const [ isLoading, setIsLoading ] = useState(true)
 	const [ activeCategory, setActiveCategory ] = useState(0)
