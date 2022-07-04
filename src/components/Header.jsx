@@ -1,14 +1,10 @@
 import logoSvg  from '../assets/img/pizza-logo.svg'
 import { Link } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux'
-
 import Search from './Search'
 
 
 const Header = () => {
-	const { searchValue } = useSelector(state => state.filter)
-	const dispatch = useDispatch()
 
 	return (
 		<div className="header">
@@ -22,7 +18,7 @@ const Header = () => {
 						</div>
 					</div>
 				</Link>
-				<Search dispatch={ dispatch } searchValue={ searchValue }/>
+				<Search/>
 				<div className="header__cart">
 					<Link to={ '/cart' } className="button button--cart">
 						<span>520 ₽</span>
