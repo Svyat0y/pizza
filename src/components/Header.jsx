@@ -1,5 +1,5 @@
-import logoSvg  from '../assets/img/pizza-logo.svg'
-import { Link } from 'react-router-dom'
+import logoSvg               from '../assets/img/pizza-logo.svg'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux'
 import { setFilters }  from '../redux/slices/filterSlice'
@@ -8,6 +8,7 @@ import Search from './Search'
 
 
 const Header = () => {
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
 	const resetObj = {
@@ -18,6 +19,7 @@ const Header = () => {
 	}
 	const onResetFilters = () => {
 		dispatch(setFilters(resetObj))
+		URLSearchParams.delete()
 	}
 
 	return (
