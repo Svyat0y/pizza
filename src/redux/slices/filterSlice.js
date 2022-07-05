@@ -24,10 +24,15 @@ export const filterSlice = createSlice({
 		setSearchValue: (state, action) => {
 			state.searchValue = action.payload
 		},
+		setFilters: (state, action) => {
+			state.activeCategory = Number(action.payload.activeCategory)
+			state.currentPage = Number(action.payload.currentPage)
+			state.activeSort = action.payload.sort
+		},
 	},
 })
 
 // Action creators are generated for each case reducer function
-export const { setCategory, setPage, setSort, setSearchValue } = filterSlice.actions
+export const { setCategory, setPage, setSort, setSearchValue, setFilters } = filterSlice.actions
 
 export default filterSlice.reducer

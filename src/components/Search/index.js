@@ -4,11 +4,9 @@ import { useCallback, useState } from 'react'
 import _debounce from 'lodash/debounce'
 
 import { setSearchValue } from '../../redux/slices/filterSlice'
-import { useDispatch }    from 'react-redux'
 
 
-const Search = () => {
-	const dispatch = useDispatch()
+const Search = ({ dispatch }) => {
 	const [ value, setValue ] = useState('')
 
 	const onSearch = useCallback(

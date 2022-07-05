@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 
 
+export const sortList = [
+	{ name: 'популярности (по возр.)', sortProperty: 'rating' },
+	{ name: 'популярности (по убыв.)', sortProperty: '-rating' },
+	{ name: 'цене (по возр.)', sortProperty: 'price' },
+	{ name: 'цене (по убыв.)', sortProperty: '-price' },
+	{ name: 'алфавиту (по возр.)', sortProperty: '-name' },
+	{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
+]
+
+
 const Sort = ({ activeSort, onclickSort }) => {
-	const sortList = [
-		{ name: 'популярности (по возр.)', sortProperty: 'rating' },
-		{ name: 'популярности (по убыв.)', sortProperty: '-rating' },
-		{ name: 'цене (по возр.)', sortProperty: 'price' },
-		{ name: 'цене (по убыв.)', sortProperty: '-price' },
-		{ name: 'алфавиту (по возр.)', sortProperty: '-name' },
-		{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
-	]
+
 	const [ open, setOpen ] = useState(false)
 	const sortRef = useRef()
 
