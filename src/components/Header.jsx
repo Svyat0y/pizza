@@ -1,15 +1,29 @@
 import logoSvg  from '../assets/img/pizza-logo.svg'
 import { Link } from 'react-router-dom'
 
+import { useDispatch } from 'react-redux'
+import { setFilters }  from '../redux/slices/filterSlice'
+
 import Search from './Search'
 
 
 const Header = () => {
+	const dispatch = useDispatch()
+
+	const resetObj = {
+		activeCategory: 0,
+		currentPage: 1,
+		searchValue: '',
+		sort: { name: 'популярности (по убыв.)', sortProperty: '-rating' }
+	}
+	const onResetFilters = () => {
+		dispatch(setFilters(resetObj))
+	}
 
 	return (
 		<div className="header">
 			<div className="container">
-				<Link to={ '/' }>
+				<Link to={ '/' } onClick={ onResetFilters }>
 					<div className="header__logo">
 						<img width="38" src={ logoSvg } alt="Pizza logo"/>
 						<div>
@@ -18,7 +32,7 @@ const Header = () => {
 						</div>
 					</div>
 				</Link>
-				<Search/>
+				<Search dispatch={ dispatch }/>
 				<div className="header__cart">
 					<Link to={ '/cart' } className="button button--cart">
 						<span>520 ₽</span>
