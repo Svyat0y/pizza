@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearCart }                from '../redux/slices/cartSlice'
 
 
-import CartItem from '../components/CartItem'
+import CartItem  from '../components/CartItem'
+import CartEmpty from '../components/CartEmpty'
 
 
 const Cart = () => {
@@ -14,6 +15,8 @@ const Cart = () => {
 	const onClearCart = () => {
 		if ( window.confirm('Are you sure you want to clear all cart?') ) dispatch(clearCart())
 	}
+	
+	if ( !totalPrice ) return <CartEmpty/>
 
 	return (
 		<div className="container container--cart">
