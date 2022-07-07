@@ -14,7 +14,7 @@ const CartItem = ({ id, name, type, price, size, count }) => {
 	}
 
 	const onRemoveItem = () => {
-		if ( window.confirm('Are you sure you want to remove?') ) dispatch(removeItem(id))
+		if ( window.confirm('Вы уверены, что хотите удалить пиццу?') ) dispatch(removeItem(id))
 	}
 
 	return (

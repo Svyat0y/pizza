@@ -13,9 +13,9 @@ const Cart = () => {
 	const totalCount = items.reduce((sum, obj) => obj.count + sum, 0)
 
 	const onClearCart = () => {
-		if ( window.confirm('Are you sure you want to clear all cart?') ) dispatch(clearCart())
+		if ( window.confirm('Вы уверены, что хотите очистить всю корзину?') ) dispatch(clearCart())
 	}
-	
+
 	if ( !totalPrice ) return <CartEmpty/>
 
 	return (
