@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate }                 from 'react-router-dom'
 import qs                              from 'qs'
 
-import { useDispatch, useSelector }                   from 'react-redux'
-import { setCategory, setPage, setSort, setFilters, } from '../redux/slices/filterSlice'
-import { fetchPizzas }                                from '../redux/slices/pizzasSlice'
+import { useDispatch, useSelector }                                 from 'react-redux'
+import { setCategory, setPage, setSort, setFilters, selectFilter, } from '../redux/slices/filterSlice'
+import { fetchPizzas, selectPizzasData }                            from '../redux/slices/pizzasSlice'
 
 import Categories         from '../components/Categories'
 import Sort, { sortList } from '../components/Sort'
@@ -14,8 +14,8 @@ import Pagination         from '../components/Pagination'
 
 
 const Home = () => {
-	const { activeCategory, currentPage, activeSort, searchValue } = useSelector(state => state.filter)
-	const { items, status } = useSelector(state => state.pizzas)
+	const { activeCategory, currentPage, activeSort, searchValue } = useSelector(selectFilter)
+	const { items, status } = useSelector(selectPizzasData)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 

@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters }               from '../redux/slices/filterSlice'
+import { selectCart }               from '../redux/slices/cartSlice'
 
 import Search from './Search'
 
 
 const Header = () => {
 	const dispatch = useDispatch()
-	const { totalPrice, items } = useSelector((state) => state.cart)
+	const { totalPrice, items } = useSelector(selectCart)
 
 	const totalCount = items.reduce((sum, obj) => obj.count + sum, 0)
 
