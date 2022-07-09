@@ -1,19 +1,19 @@
-import logoSvg               from '../assets/img/pizza-logo.svg'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters }               from '../redux/slices/filterSlice'
 import { selectCart }               from '../redux/slices/cartSlice'
 
-import Search from './Search'
+import Search  from './Search'
+import logoSvg from '../assets/img/pizza-logo.svg'
 
 
 const Header = () => {
+	const location = useLocation()
 	const dispatch = useDispatch()
 	const { totalPrice, items } = useSelector(selectCart)
-	const location = useLocation()
 	const totalCount = items.reduce((sum, obj) => obj.count + sum, 0)
-	 
+
 	const resetObj = {
 		activeCategory: 0,
 		currentPage: 1,

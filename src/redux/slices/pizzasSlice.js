@@ -18,11 +18,7 @@ const initialState = {
 const pizzasSlice = createSlice({
 	name: 'pizzas',
 	initialState,
-	reducers: {
-		setItems: (state, action) => {
-			state.items = action.payload
-		}
-	},
+	reducers: {},
 	extraReducers: {
 		[fetchPizzas.pending]: (state, action) => {
 			state.items = []

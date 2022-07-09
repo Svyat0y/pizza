@@ -1,17 +1,12 @@
-import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice'
 import { useDispatch }                    from 'react-redux'
+import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice'
 
 
 const CartItem = ({ id, name, type, price, size, count }) => {
 	const dispatch = useDispatch()
 
-	const onMinusItem = () => {
-		dispatch(minusItem(id))
-	}
-
-	const onPlusItem = () => {
-		dispatch(addItem({ id }))
-	}
+	const onMinusItem = () => dispatch(minusItem(id))
+	const onPlusItem = () => dispatch(addItem({ id }))
 
 	const onRemoveItem = () => {
 		if ( window.confirm('Вы уверены, что хотите удалить пиццу?') ) dispatch(removeItem(id))

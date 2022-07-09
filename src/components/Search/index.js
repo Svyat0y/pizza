@@ -1,11 +1,11 @@
 import styles                    from './Search.module.scss'
 import { useCallback, useState } from 'react'
 
-import searchSvg from '../../assets/img/search.svg'
-
-import _debounce from 'lodash/debounce'
 
 import { setSearchValue } from '../../redux/slices/filterSlice'
+
+import _debounce from 'lodash/debounce'
+import searchSvg from '../../assets/img/search.svg'
 
 
 const Search = ({ dispatch }) => {
@@ -21,7 +21,6 @@ const Search = ({ dispatch }) => {
 		setValue(e.target.value)
 		onSearch(e.target.value)
 	}
-
 
 	return (
 		<div className={ styles.root }>

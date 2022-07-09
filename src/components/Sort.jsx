@@ -10,11 +10,9 @@ export const sortList = [
 	{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
 ]
 
-
 const Sort = ({ activeSort, onclickSort }) => {
-
-	const [ open, setOpen ] = useState(false)
 	const sortRef = useRef()
+	const [ open, setOpen ] = useState(false)
 
 	useEffect(() => {
 		document.body.addEventListener('click', handleClickOutside)

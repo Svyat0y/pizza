@@ -1,15 +1,13 @@
 import styles                  from './FullPizza.module.scss'
 import { useEffect, useState } from 'react'
-import { useParams }           from 'react-router-dom'
 
-import axios from 'axios'
+import { useParams } from 'react-router-dom'
+import axios         from 'axios'
 
 
 const FullPizza = () => {
-	const [ pizza, setPizza ] = useState()
 	const { id } = useParams()
-
-	console.log(id)
+	const [ pizza, setPizza ] = useState()
 
 	useEffect(() => {
 		async function fetchPizza() {
