@@ -23,4 +23,19 @@
       border: 1px solid rgba(0, 0, 0, 0.5)
     }
   }
+
+  @media (max-width: 1240px) {
+    left: 0;
+  }
+
+  @media (max-width: 1040px) {
+    input {
+      width: 250px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    display: none;
+  }
+
 }

@@ -357,6 +357,7 @@ body {
     margin: 0 auto;
     width: 560px;
     text-align: center;
+    padding: 28px;
 
     h2 {
       font-size: 36px;
@@ -371,11 +372,6 @@ body {
       color: #777777;
     }
 
-    icon {
-      position: relative;
-      top: 2px;
-    }
-
     img {
       display: block;
       width: 300px;
@@ -388,6 +384,42 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+    }
+
+    @media (max-width: 730px) {
+
+      width: 440px;
+      h2 {
+        font-size: 24px;
+
+      }
+      p {
+        font-size: 16px;
+      }
+
+    }
+
+    @media (max-width: 520px) {
+
+      width: 100%;
+      h2 {
+        font-size: 20px;
+
+      }
+      p {
+        font-size: 16px;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      .button--black {
+        padding: 10px 0 12px;
+        width: 200px;
+        font-size: 16px;
+      }
+
     }
   }
 }
