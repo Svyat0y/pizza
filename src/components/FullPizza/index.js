@@ -1,11 +1,12 @@
 import styles                  from './FullPizza.module.scss'
 import { useEffect, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
-import axios         from 'axios'
+import { useParams, useNavigate } from 'react-router-dom'
+import axios                      from 'axios'
 
 
 const FullPizza = () => {
+	const navigate = useNavigate()
 	const { id } = useParams()
 	const [ pizza, setPizza ] = useState()
 
@@ -17,6 +18,7 @@ const FullPizza = () => {
 			}
 			catch ( e ) {
 				alert('Не удалось получить пиццу!')
+				navigate('/')
 			}
 		}
 
