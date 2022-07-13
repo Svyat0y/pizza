@@ -1,9 +1,16 @@
+import React  from 'react'
 import styles from './Pagination.module.scss'
 
 import ReactPaginate from 'react-paginate'
 
 
-const Pagination = ({ dispatch, setPage }) => {
+type PaginationProps = {
+	setPage: (i: number) => void,
+	dispatch: any
+}
+
+
+const Pagination: React.FC<PaginationProps> = ({ dispatch, setPage }) => {
 	return (
 		<div className={ styles.root }>
 			<ReactPaginate
@@ -13,7 +20,6 @@ const Pagination = ({ dispatch, setPage }) => {
 				pageRangeDisplayed={ 4 }
 				pageCount={ 3 }
 				previousLabel="<"
-				renderOnZeroPageCount={ null }
 			/>
 		</div>
 	)

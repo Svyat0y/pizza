@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
@@ -8,7 +8,16 @@ import { addItem, selectCartById }  from '../redux/slices/cartSlice'
 
 const typesName = [ 'тонкое', 'традиционное' ]
 
-const PizzaBlock = ({ id, name, imageUrl, price, sizes, types }) => {
+type PizzaBlockProps = {
+	id: number,
+	name: string,
+	imageUrl: string,
+	price: number,
+	sizes: number[],
+	types: number[]
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, name, imageUrl, price, sizes, types }) => {
 	const dispatch = useDispatch()
 	const cartItem = useSelector(selectCartById(id))
 	const [ activeType, setActiveType ] = useState(types[0])

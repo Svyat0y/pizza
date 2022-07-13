@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import qs              from 'qs'
@@ -14,7 +14,7 @@ import PizzaBlock         from '../components/PizzaBlock'
 import Pagination         from '../components/Pagination'
 
 
-const Home = () => {
+const Home: React.FC = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const isSearch = useRef(false)
@@ -39,7 +39,7 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		if ( window.location.search ) {
+		if (window.location.search) {
 			const params = qs.parse(window.location.search.substring(1))
 			const sort = sortList.find(obj => obj.sortProperty === params.sortProperty)
 			dispatch(setFilters({ ...params, sort }))
@@ -48,12 +48,12 @@ const Home = () => {
 	}, [])
 
 	useEffect(() => {
-		if ( !isSearch.current ) getPizzas()
+		if (!isSearch.current) getPizzas()
 		isSearch.current = false
 	}, [ activeCategory, activeSort, searchValue, currentPage ])
 
 	useEffect(() => {
-		if ( isMounted.current ) {
+		if (isMounted.current) {
 			const queryString = qs.stringify({
 				sortProperty: activeSort.sortProperty,
 				activeCategory,
@@ -68,7 +68,7 @@ const Home = () => {
 		<div className="container">
 			<div className="content__top">
 				<Categories category={ activeCategory } onClickCategory={ (i) => dispatch(setCategory(i)) }/>
-				<Sort activeSort={ activeSort } onclickSort={ (obj) => dispatch(setSort(obj)) }/>
+				<Sort activeSort={ activeSort } onclickSort={ (obj: any) => dispatch(setSort(obj)) }/>
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			{
@@ -81,7 +81,7 @@ const Home = () => {
 						{
 							status === 'pending'
 								? Array(10).fill(0).map((_, index) => <LoadingBlock key={ index }/>)
-								: items.map(obj => <PizzaBlock key={ obj.id } { ...obj }/>)
+								: items.map((obj: any) => <PizzaBlock key={ obj.id } { ...obj }/>)
 						}
 					</div>
 

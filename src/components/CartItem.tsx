@@ -1,15 +1,27 @@
+import React from 'react'
+
 import { useDispatch }                    from 'react-redux'
 import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice'
 
 
-const CartItem = ({ id, name, type, price, size, count }) => {
+type CartItemProps = {
+	id: string,
+	name: string,
+	type: string,
+	price: number,
+	size: number,
+	count: number,
+	imageUrl: string
+}
+
+const CartItem: React.FC<CartItemProps> = ({ id, name, type, price, size, count, imageUrl }) => {
 	const dispatch = useDispatch()
 
 	const onMinusItem = () => dispatch(minusItem(id))
 	const onPlusItem = () => dispatch(addItem({ id }))
 
 	const onRemoveItem = () => {
-		if ( window.confirm('Вы уверены, что хотите удалить пиццу?') ) dispatch(removeItem(id))
+		if (window.confirm('Вы уверены, что хотите удалить пиццу?')) dispatch(removeItem(id))
 	}
 
 	return (
@@ -17,7 +29,7 @@ const CartItem = ({ id, name, type, price, size, count }) => {
 			<div className="cart__item-img">
 				<img
 					className="pizza-block__image"
-					src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+					src={ imageUrl }
 					alt="Pizza"
 				/>
 			</div>

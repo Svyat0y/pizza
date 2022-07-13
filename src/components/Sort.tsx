@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
 
-export const sortList = [
+type SortItem = {
+	name: string,
+	sortProperty: string
+}
+
+export const sortList: SortItem[] = [
 	{ name: 'популярности (по возр.)', sortProperty: 'rating' },
 	{ name: 'популярности (по убыв.)', sortProperty: '-rating' },
 	{ name: 'цене (по возр.)', sortProperty: 'price' },
@@ -10,8 +15,8 @@ export const sortList = [
 	{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
 ]
 
-const Sort = ({ activeSort, onclickSort }) => {
-	const sortRef = useRef()
+const Sort = ({ activeSort, onclickSort }: { activeSort: any, onclickSort: any }) => {
+	const sortRef = useRef<HTMLDivElement>(null)
 	const [ open, setOpen ] = useState(false)
 
 	useEffect(() => {
@@ -19,12 +24,12 @@ const Sort = ({ activeSort, onclickSort }) => {
 		return () => document.body.removeEventListener('click', handleClickOutside)
 	}, [])
 
-	const handleClickOutside = (e) => {
+	const handleClickOutside = (e: any) => {
 		const path = e.path || (e.composedPath && e.composedPath())
-		if ( !path.includes(sortRef.current) ) setOpen(false)
+		if (!path.includes(sortRef.current)) setOpen(false)
 	}
 
-	const onClickSortValue = (obj) => {
+	const onClickSortValue = (obj: SortItem) => {
 		onclickSort(obj)
 		setOpen(false)
 	}
