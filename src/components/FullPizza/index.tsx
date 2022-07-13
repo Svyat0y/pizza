@@ -1,14 +1,18 @@
-import styles                  from './FullPizza.module.scss'
-import { useEffect, useState } from 'react'
+import styles                         from './FullPizza.module.scss'
+import React, { useEffect, useState } from 'react'
 
 import { useParams, useNavigate } from 'react-router-dom'
 import axios                      from 'axios'
 
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
 	const navigate = useNavigate()
 	const { id } = useParams()
-	const [ pizza, setPizza ] = useState()
+	const [ pizza, setPizza ] = useState<{
+		imageUrl: string,
+		name: string,
+		price: number
+	}>()
 
 	useEffect(() => {
 		async function fetchPizza() {
@@ -16,7 +20,7 @@ const FullPizza = () => {
 				const { data } = await axios.get('https://62b869c6f4cb8d63df5d67d3.mockapi.io/pizzas/' + id)
 				setPizza(data)
 			}
-			catch ( e ) {
+			catch (e) {
 				alert('Не удалось получить пиццу!')
 				navigate('/')
 			}
@@ -25,7 +29,7 @@ const FullPizza = () => {
 		fetchPizza()
 	}, [])
 
-	if ( !pizza ) return <div className={ styles.root__loading_block }>Загрузка..</div>
+	if (!pizza) return <div className={ styles.root__loading_block }>Загрузка..</div>
 
 	const { imageUrl, name, price } = pizza
 
