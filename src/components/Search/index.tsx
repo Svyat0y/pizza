@@ -21,7 +21,7 @@ const Search: React.FC<SearchProps> = ({ dispatch }) => {
 		}, 1000), []
 	)
 
-	const onChangeValue = (e: any) => {
+	const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value)
 		onSearch(e.target.value)
 	}

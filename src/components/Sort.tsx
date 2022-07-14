@@ -1,9 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
+
+type SortProps = {
+	activeSort: any,
+	onclickSort: (obj: SortItem) => void
+}
 
 type SortItem = {
 	name: string,
 	sortProperty: string
+}
+
+type PopupClick = MouseEvent & {
+	path: Node[]
 }
 
 export const sortList: SortItem[] = [
@@ -15,7 +24,7 @@ export const sortList: SortItem[] = [
 	{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
 ]
 
-const Sort = ({ activeSort, onclickSort }: { activeSort: any, onclickSort: any }) => {
+const Sort: React.FC<SortProps> = ({ activeSort, onclickSort }) => {
 	const sortRef = useRef<HTMLDivElement>(null)
 	const [ open, setOpen ] = useState(false)
 
@@ -24,9 +33,10 @@ const Sort = ({ activeSort, onclickSort }: { activeSort: any, onclickSort: any }
 		return () => document.body.removeEventListener('click', handleClickOutside)
 	}, [])
 
-	const handleClickOutside = (e: any) => {
-		const path = e.path || (e.composedPath && e.composedPath())
-		if (!path.includes(sortRef.current)) setOpen(false)
+	const handleClickOutside = (e: MouseEvent) => {
+		const _event = e as PopupClick
+		const path = _event.path || (e.composedPath && e.composedPath())
+		if (sortRef.current && !path.includes(sortRef.current)) setOpen(false)
 	}
 
 	const onClickSortValue = (obj: SortItem) => {
