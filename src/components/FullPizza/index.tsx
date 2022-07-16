@@ -1,6 +1,8 @@
 import styles                         from './FullPizza.module.scss'
 import React, { useEffect, useState } from 'react'
 
+import { Pizza } from '../../redux/slices/pizzasSlice'
+
 import { useParams, useNavigate } from 'react-router-dom'
 import axios                      from 'axios'
 
@@ -8,11 +10,7 @@ import axios                      from 'axios'
 const FullPizza: React.FC = () => {
 	const navigate = useNavigate()
 	const { id } = useParams()
-	const [ pizza, setPizza ] = useState<{
-		imageUrl: string,
-		name: string,
-		price: number
-	}>()
+	const [ pizza, setPizza ] = useState<Pizza>()
 
 	useEffect(() => {
 		async function fetchPizza() {

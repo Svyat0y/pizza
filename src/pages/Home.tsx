@@ -3,9 +3,10 @@ import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import qs              from 'qs'
 
-import { useDispatch, useSelector }                                 from 'react-redux'
-import { setCategory, setPage, setSort, setFilters, selectFilter, } from '../redux/slices/filterSlice'
-import { fetchPizzas, selectPizzasData }                            from '../redux/slices/pizzasSlice'
+import { useAppDispatch }                                               from '../redux/store'
+import { useSelector }                                                  from 'react-redux'
+import { setCategory, setSort, setFilters, selectFilter, FilterSlice, } from '../redux/slices/filterSlice'
+import { fetchPizzas, selectPizzasData }                                from '../redux/slices/pizzasSlice'
 
 import Categories         from '../components/Categories'
 import Sort, { sortList } from '../components/Sort'
@@ -16,9 +17,9 @@ import Pagination         from '../components/Pagination'
 
 const Home: React.FC = () => {
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
-	const isSearch = useRef(false)
+	const dispatch = useAppDispatch()
 	const isMounted = useRef(false)
+	const isSearch = useRef(false)
 	const { activeCategory, currentPage, activeSort, searchValue } = useSelector(selectFilter)
 	const { items, status } = useSelector(selectPizzasData)
 
@@ -34,35 +35,37 @@ const Home: React.FC = () => {
 			search,
 			sortBy,
 			order,
-			currentPage,
+			currentPage: String(currentPage),
 		}))
 	}
 
 	useEffect(() => {
 		if (window.location.search) {
 			const params = qs.parse(window.location.search.substring(1))
-			const sort = sortList.find(obj => obj.sortProperty === params.sortProperty)
-			dispatch(setFilters({ ...params, sort }))
+			const activeSort = sortList.find(obj => obj.sortProperty === params.sortProperty)
+
+			const filterParams = { ...params, activeSort }
+			dispatch(setFilters(filterParams as FilterSlice))
 			isSearch.current = true
 		}
 	}, [])
-
-	useEffect(() => {
-		if (!isSearch.current) getPizzas()
-		isSearch.current = false
-	}, [ activeCategory, activeSort, searchValue, currentPage ])
 
 	useEffect(() => {
 		if (isMounted.current) {
 			const queryString = qs.stringify({
 				sortProperty: activeSort.sortProperty,
 				activeCategory,
-				currentPage
+				currentPage,
 			})
 			navigate(`?${ queryString }`)
 		}
 		isMounted.current = true
-	}, [ activeCategory, activeSort, searchValue, currentPage ])
+	}, [ activeCategory, activeSort.sortProperty, searchValue, currentPage ])
+
+	useEffect(() => {
+		if (!isSearch.current) getPizzas()
+		isSearch.current = false
+	}, [ activeCategory, activeSort.sortProperty, searchValue, currentPage ])
 
 	return (
 		<div className="container">
@@ -86,7 +89,7 @@ const Home: React.FC = () => {
 					</div>
 
 			}
-			<Pagination dispatch={ dispatch } setPage={ setPage }/>
+			<Pagination/>
 		</div>
 	)
 }

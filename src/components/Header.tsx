@@ -2,7 +2,7 @@ import React                 from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilters }               from '../redux/slices/filterSlice'
+import { FilterSlice, setFilters }  from '../redux/slices/filterSlice'
 import { selectCart }               from '../redux/slices/cartSlice'
 
 import Search from './Search'
@@ -16,15 +16,15 @@ const Header: React.FC = () => {
 	const { totalPrice, items } = useSelector(selectCart)
 	const totalCount = items.reduce((sum: number, obj: any) => obj.count + sum, 0)
 
-	const resetObj = {
-		activeCategory: 0,
-		currentPage: 1,
-		searchValue: '',
-		sort: { name: 'популярности (по убыв.)', sortProperty: '-rating' }
-	}
 	const onResetFilters = () => {
+		const resetObj: FilterSlice = {
+			activeCategory: 0,
+			currentPage: 1,
+			searchValue: '',
+			activeSort: { name: 'популярности (по убыв.)', sortProperty: '-rating' }
+		}
+
 		dispatch(setFilters(resetObj))
-		URLSearchParams.delete()
 	}
 
 	return (
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
 						</div>
 					</div>
 				</Link>
-				<Search dispatch={ dispatch }/>
+				<Search/>
 				{
 					location.pathname !== '/cart' &&
 					<div className="header__cart">

@@ -2,17 +2,15 @@ import React, { useCallback, useState } from 'react'
 import styles                           from './Search.module.scss'
 
 
+import { useDispatch }    from 'react-redux'
 import { setSearchValue } from '../../redux/slices/filterSlice'
 
 import _debounce from 'lodash/debounce'
 import searchSvg from '../../assets/img/search.svg'
 
 
-type SearchProps = {
-	dispatch: any
-}
-
-const Search: React.FC<SearchProps> = ({ dispatch }) => {
+const Search: React.FC = () => {
+	const dispatch = useDispatch()
 	const [ value, setValue ] = useState<string>('')
 
 	const onSearch = useCallback(

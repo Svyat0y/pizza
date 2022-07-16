@@ -1,24 +1,14 @@
 import React from 'react'
 
-import { useDispatch }                    from 'react-redux'
-import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice'
+import { useDispatch }                               from 'react-redux'
+import { addItem, ICartItem, minusItem, removeItem } from '../redux/slices/cartSlice'
 
 
-type CartItemProps = {
-	id: string,
-	name: string,
-	type: string,
-	price: number,
-	size: number,
-	count: number,
-	imageUrl: string
-}
-
-const CartItem: React.FC<CartItemProps> = ({ id, name, type, price, size, count, imageUrl }) => {
+const CartItem: React.FC<ICartItem> = ({ id, name, type, price, size, count, imageUrl }) => {
 	const dispatch = useDispatch()
 
 	const onMinusItem = () => dispatch(minusItem(id))
-	const onPlusItem = () => dispatch(addItem({ id }))
+	const onPlusItem = () => dispatch(addItem({ id } as ICartItem))
 
 	const onRemoveItem = () => {
 		if (window.confirm('Вы уверены, что хотите удалить пиццу?')) dispatch(removeItem(id))
