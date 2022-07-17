@@ -49,6 +49,17 @@ const Home: React.FC = () => {
 		}
 	}, [])
 
+	useEffect(() => {
+		if (isMounted.current) {
+			const queryString = qs.stringify({
+				sortProperty: activeSort.sortProperty,
+				activeCategory,
+				currentPage,
+			})
+			navigate(`?${ queryString }`)
+		}
+		isMounted.current = true
+	}, [ activeCategory, activeSort.sortProperty, searchValue, currentPage ])
 
 	useEffect(() => {
 		if (!isSearch.current) getPizzas()
