@@ -23,7 +23,6 @@ const Header: React.FC = () => {
 			searchValue: '',
 			activeSort: { name: 'популярности (по убыв.)', sortProperty: '-rating' }
 		}
-
 		dispatch(setFilters(resetObj))
 	}
 

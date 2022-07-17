@@ -44,23 +44,11 @@ const Home: React.FC = () => {
 			const params = qs.parse(window.location.search.substring(1))
 			const activeSort = sortList.find(obj => obj.sortProperty === params.sortProperty)
 
-			const filterParams = { ...params, activeSort }
-			dispatch(setFilters(filterParams as FilterSlice))
+			dispatch(setFilters({ ...params, activeSort } as FilterSlice))
 			isSearch.current = true
 		}
 	}, [])
 
-	useEffect(() => {
-		if (isMounted.current) {
-			const queryString = qs.stringify({
-				sortProperty: activeSort.sortProperty,
-				activeCategory,
-				currentPage,
-			})
-			navigate(`?${ queryString }`)
-		}
-		isMounted.current = true
-	}, [ activeCategory, activeSort.sortProperty, searchValue, currentPage ])
 
 	useEffect(() => {
 		if (!isSearch.current) getPizzas()
