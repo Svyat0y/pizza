@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import qs              from 'qs'
 
-import { useAppDispatch }                                               from '../redux/store'
-import { useSelector }                                                  from 'react-redux'
-import { setCategory, setSort, setFilters, selectFilter, FilterSlice, } from '../redux/slices/filterSlice'
-import { fetchPizzas, selectPizzasData }                                from '../redux/slices/pizzasSlice'
+import { useAppDispatch }                                                      from '../redux/store'
+import { useSelector }                                                         from 'react-redux'
+import { setCategory, setSort, setFilters, selectFilter, FilterSlice, SortT, } from '../redux/slices/filterSlice'
+import { fetchPizzas, selectPizzasData }                                       from '../redux/slices/pizzasSlice'
 
 import Categories         from '../components/Categories'
 import Sort, { sortList } from '../components/Sort'
@@ -22,7 +22,6 @@ const Home: React.FC = () => {
 	const isSearch = useRef(false)
 	const { activeCategory, currentPage, activeSort, searchValue } = useSelector(selectFilter)
 	const { items, status } = useSelector(selectPizzasData)
-
 
 	const getPizzas = () => {
 		const category = activeCategory > 0 ? `category=${ activeCategory }` : ''
@@ -66,11 +65,19 @@ const Home: React.FC = () => {
 		isSearch.current = false
 	}, [ activeCategory, activeSort.sortProperty, searchValue, currentPage ])
 
+	const onChangeCategory = useCallback((i: number) => {
+		dispatch(setCategory(i))
+	}, [])
+
+	const onChangeSort = useCallback((obj: SortT) => {
+		dispatch(setSort(obj))
+	}, [])
+
 	return (
 		<div className="container">
 			<div className="content__top">
-				<Categories category={ activeCategory } onClickCategory={ (i) => dispatch(setCategory(i)) }/>
-				<Sort activeSort={ activeSort } onclickSort={ (obj: any) => dispatch(setSort(obj)) }/>
+				<Categories category={ activeCategory } onClickCategory={ onChangeCategory }/>
+				<Sort activeSort={ activeSort } onclickSort={ onChangeSort }/>
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			{

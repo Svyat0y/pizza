@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { SortT }                              from '../redux/slices/filterSlice'
+import React, { memo, useEffect, useRef, useState } from 'react'
+import { SortT }                                    from '../redux/slices/filterSlice'
+import { useWhyDidYouUpdate }                       from 'ahooks'
 
 
 type SortProps = {
@@ -20,9 +21,11 @@ export const sortList: SortT[] = [
 	{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
 ]
 
-const Sort: React.FC<SortProps> = ({ activeSort, onclickSort }) => {
+const Sort: React.FC<SortProps> = memo(({ activeSort, onclickSort }) => {
 	const sortRef = useRef<HTMLDivElement>(null)
 	const [ open, setOpen ] = useState(false)
+
+	useWhyDidYouUpdate('Sort', { activeSort, onclickSort })
 
 	useEffect(() => {
 		document.body.addEventListener('click', handleClickOutside)
@@ -73,6 +76,6 @@ const Sort: React.FC<SortProps> = ({ activeSort, onclickSort }) => {
 			) }
 		</div>
 	)
-}
+})
 
 export default Sort
