@@ -1,5 +1,5 @@
-import React                 from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect, useRef } from 'react'
+import { Link, useLocation }        from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { FilterSlice, setFilters }  from '../redux/slices/filterSlice'
@@ -13,8 +13,18 @@ import logoSvg from '../assets/img/pizza-logo.svg'
 const Header: React.FC = () => {
 	const location = useLocation()
 	const dispatch = useDispatch()
+	const isMounted = useRef(false)
 	const { totalPrice, items } = useSelector(selectCart)
 	const totalCount = items.reduce((sum: number, obj: any) => obj.count + sum, 0)
+
+	useEffect(() => {
+		if (isMounted) {
+			const json = JSON.stringify(items)
+			localStorage.setItem('cart', json)
+			console.log(json)
+		}
+		isMounted.current = true
+	}, [ items ])
 
 	const onResetFilters = () => {
 		const resetObj: FilterSlice = {
