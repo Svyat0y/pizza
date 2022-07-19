@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react'
-import { SortT }                                    from '../redux/slices/filterSlice'
+import { SortT }                                    from '../redux/filter/types'
 
 
 type SortProps = {
@@ -11,13 +11,23 @@ type PopupClick = MouseEvent & {
 	path: Node[]
 }
 
+export enum SortListEnum {
+	RATINGASK = 'rating',
+	RATINGDESK = '-rating',
+	PRICEASK = 'price',
+	PRICEDESK = '-price',
+	NAMEASK = 'name',
+	NAMEDESK = '-name',
+
+}
+
 export const sortList: SortT[] = [
-	{ name: 'популярности (по возр.)', sortProperty: 'rating' },
-	{ name: 'популярности (по убыв.)', sortProperty: '-rating' },
-	{ name: 'цене (по возр.)', sortProperty: 'price' },
-	{ name: 'цене (по убыв.)', sortProperty: '-price' },
-	{ name: 'алфавиту (по возр.)', sortProperty: '-name' },
-	{ name: 'алфавиту (по убыв.)', sortProperty: 'name' },
+	{ name: 'популярности (по возр.)', sortProperty: SortListEnum.RATINGASK },
+	{ name: 'популярности (по убыв.)', sortProperty: SortListEnum.RATINGDESK },
+	{ name: 'цене (по возр.)', sortProperty: SortListEnum.PRICEASK },
+	{ name: 'цене (по убыв.)', sortProperty: SortListEnum.PRICEDESK },
+	{ name: 'алфавиту (по возр.)', sortProperty: SortListEnum.NAMEASK },
+	{ name: 'алфавиту (по убыв.)', sortProperty: SortListEnum.NAMEDESK },
 ]
 
 const Sort: React.FC<SortProps> = memo(({ activeSort, onclickSort }) => {

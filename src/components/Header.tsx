@@ -2,12 +2,13 @@ import React, { useEffect, useRef } from 'react'
 import { Link, useLocation }        from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { FilterSlice, setFilters }  from '../redux/slices/filterSlice'
-import { selectCart }               from '../redux/slices/cartSlice'
+import { selectCart }               from '../redux/cart/selectors'
+import { setFilters }               from '../redux/filter/slice'
+import { FilterSlice }              from '../redux/filter/types'
 
-import Search from './Search'
-
-import logoSvg from '../assets/img/pizza-logo.svg'
+import { SortListEnum } from './Sort'
+import Search           from './Search'
+import logoSvg          from '../assets/img/pizza-logo.svg'
 
 
 const Header: React.FC = () => {
@@ -30,7 +31,7 @@ const Header: React.FC = () => {
 			activeCategory: 0,
 			currentPage: 1,
 			searchValue: '',
-			activeSort: { name: 'популярности (по убыв.)', sortProperty: '-rating' }
+			activeSort: { name: 'популярности (по убыв.)', sortProperty: SortListEnum.RATINGDESK }
 		}
 		dispatch(setFilters(resetObj))
 	}

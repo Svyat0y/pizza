@@ -1,10 +1,11 @@
 import styles                         from './FullPizza.module.scss'
 import React, { useEffect, useState } from 'react'
 
-import { Pizza } from '../../redux/slices/pizzasSlice'
 
+import { Pizza }                  from '../../redux/pizzas/types'
 import { useParams, useNavigate } from 'react-router-dom'
-import axios                      from 'axios'
+
+import axios from 'axios'
 
 
 const FullPizza: React.FC = () => {

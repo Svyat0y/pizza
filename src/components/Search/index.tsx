@@ -3,7 +3,7 @@ import styles                           from './Search.module.scss'
 
 
 import { useDispatch }    from 'react-redux'
-import { setSearchValue } from '../../redux/slices/filterSlice'
+import { setSearchValue } from '../../redux/filter/slice'
 
 import _debounce from 'lodash/debounce'
 import searchSvg from '../../assets/img/search.svg'
