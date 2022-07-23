@@ -8,7 +8,7 @@ import { CartSlice, ICartItem } from './types'
 
 const initialState: CartSlice = getItemsFromLS()
 
-const getItemById = (state: CartSlice, action: PayloadAction<string>) => state.items.find((obj: ICartItem) => obj.id === action.payload)
+const getItemById = (items: ICartItem[], action: PayloadAction<string>) => items.find((obj: ICartItem) => obj.id === action.payload)
 
 export const cartSlice = createSlice({
 	name: 'cart',
@@ -23,7 +23,7 @@ export const cartSlice = createSlice({
 			state.totalPrice = Number(getTotalPrice(state.items))
 		},
 		minusItem: (state, action: PayloadAction<string>) => {
-			const findItem = getItemById(state, action)
+			const findItem = getItemById(state.items, action)
 
 			if (findItem && findItem.count > 1) {
 				findItem.count--
@@ -31,7 +31,7 @@ export const cartSlice = createSlice({
 			}
 		},
 		removeItem: (state, action: PayloadAction<string>) => {
-			const findItem = getItemById(state, action)
+			const findItem = getItemById(state.items, action)
 
 			state.items = state.items.filter(obj => obj.id !== action.payload)
 			if (findItem) state.totalPrice = state.totalPrice - (findItem.price * findItem.count)
